@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 import setuptools
 
 
-VERSION = "0.5.3"
-DESCRIPTION = "Vinted API wrapper for python"
+VERSION = "1.0"
+DESCRIPTION = "Vinted Python client"
 
 with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
@@ -11,15 +11,15 @@ with open("README.md", "r", encoding="utf-8") as fh:
 # Setting up
 setup(
     # the name must match the folder name 'verysimplemodule'
-    name="pyVinted",
+    name="vinted-client",
     version=VERSION,
-    author="Aimé Risson",
-    author_email="aime.risson.1@gmail.fr",
+    author="Paolo Compieta",
+    author_email="paolocompieta@gmail.com",
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     install_requires=["requests"],
-    keywords=["python", "Vinted api", "Vinted API wrapper", "python vinted"],
+    keywords=["python", "Vinted", "export", "wardrobe", "scrape"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -28,6 +28,6 @@ setup(
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    python_requires=">=3.6",
-    url="https://github.com/aime-risson/vinted-api-wrapper",
+    python_requires=">=3.13",
+    url="https://github.com/pcompieta/vinted-wardrobe-refresher",
 )
