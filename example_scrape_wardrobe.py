@@ -4,7 +4,7 @@ import requests
 from pyVinted import Vinted
 
 VINTED_SITE = "https://www.vinted.it"
-MEMBER_ID = "143839773"
+MEMBER_ID = "143839772"
 OUTPUT_DIR = "vinted_items"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -15,7 +15,7 @@ def main():
     page = 1
     while True:
         print(f"Fetching page {page}...")
-        page_items = vinted.items.search(VINTED_SITE, page=page)
+        page_items = vinted.items.wardrobe(VINTED_SITE, MEMBER_ID, page=page)
         if not page_items:
             print("No more items found.")
             break
