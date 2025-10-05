@@ -10,9 +10,9 @@ pip install vinted-wardrobe-refresher
 
 ```py
 from vinted-wardrobe-refresher import Vinted
-vinted = Vinted()
+vinted = Vinted("fr")
 
-items = vinted.items.wardrobe("https://www.vinted.fr", "143839772")
+items = vinted.items.wardrobe("143839772")
 #returns a list of objects: Item
 
 ```

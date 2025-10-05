@@ -12,14 +12,13 @@ class Vinted:
 
     """
 
-    def __init__(self, proxy=None):
+    def __init__(self, locale="fr", proxy=None):
         """
         Args:
-            Proxy : proxy to be used to bypass vinted's limite rate
-
+            proxy : proxy to be used to bypass vinted's limit rate
         """
 
         if proxy is not None:
             requester.session.proxies.update(proxy)
 
-        self.items = Items()
+        self.items = Items(locale=locale)

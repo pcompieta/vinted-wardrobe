@@ -6,12 +6,15 @@ from typing import List, Dict
 from pyVinted.vinted_urls import Urls
 class Items:
 
-    def wardrobe(self, vinted_site, member_id, nbr_items: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:
+    def __init__(self, locale=None):
+        self.locale = locale
+
+
+    def wardrobe(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:
         """
         Retrieves items from a given search url on Vinted.
 
         Args:
-            vinted_site (str): The url of the base website, used to extract locale.
             member_id (str): The member id of the wardrobe to be retrieved.
             nbr_items (int): Number of items to be returned (default 20).
             page (int): Page number to be returned (default 1).
@@ -20,11 +23,11 @@ class Items:
 
         """
 
-        locale = urlparse(vinted_site).netloc
+        locale = Urls.VINTED_BASE_URL.format(locale=self.locale)
         requester.setLocale(locale)
 
-        params = self.parse_url(vinted_site, nbr_items, page, time)
-        wardrobe_endpoint = Urls.VINTED_WARDROBE_ENDPOINT.replace('{member_id}', member_id)
+        params = self.parse_url("www.vinted.unused", nbr_items, page, time)
+        wardrobe_endpoint = Urls.VINTED_WARDROBE_ENDPOINT.format(member_id=member_id)
         vinted_site = f"https://{locale}{Urls.VINTED_API_URL}/{wardrobe_endpoint}"
 
         return self.fetch_items(json, params, vinted_site)
@@ -43,7 +46,7 @@ class Items:
 
         """
 
-        locale = urlparse(url).netloc
+        locale = self.locale or urlparse(url).netloc
         requester.setLocale(locale)
 
         params = self.parse_url(url, nbr_items, page, time)
