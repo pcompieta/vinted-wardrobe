@@ -1,39 +1,29 @@
-# Vinted-Api-Wrapper
+# Vinted Wardrobe Refresher
 Simple python package that uses the Vinted API to search new posts.
 
 ## Install
-Simpely install package using pip :
+Install the package via pip:
 ```
-pip install pyVinted
+pip install vinted-wardrobe-refresher
 ```
 ## Example
 
 ```py
-from pyVinted import Vinted
-
+from vinted-wardrobe-refresher import Vinted
 vinted = Vinted()
 
-# search(url, number_of_items, page_number)
-items = vinted.items.search("https://www.vinted.fr/vetement?order=newest_first&price_to=60&currency=EUR",10,1)
-#returns a list of objects: item
+items = vinted.items.wardrobe("https://www.vinted.fr", "143839772")
+#returns a list of objects: Item
 
 ```
-You can access Item attributes as shown here:
+You can access each single Item's attributes as shown here:
 ```py
-item1 = items[0]
-#title
-item1.title
-#id
-item1.id
-#photo url
-item1.photo
-#brand
-item1.brand_title
-#price
-item1.price
-#url
-item1.url
-#currency
-item1.currency
+item.title
+item.id
+item.photo
+item.brand
+item.price
+item.url
+item.currency
 ```
 
