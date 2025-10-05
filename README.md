@@ -4,26 +4,19 @@ Simple python package that uses the Vinted API to search new posts.
 ## Install
 Install the package via pip:
 ```
-pip install vinted-wardrobe-refresher
+pip install vintedwardrobe
 ```
 ## Example
 
 ```py
-from vinted-wardrobe-refresher import Vinted
-vinted = Vinted("fr")
+from vintedwardrobe import Vinted
+vinted = Vinted(locale="it")
 
-items = vinted.items.wardrobe("143839772")
-#returns a list of objects: Item
+items = vinted.scraper.wardrobe_all("your_member_id_here")
 
+for idx, item in enumerate(items, 1):
+    print(f"  Processing item {idx}: {item.title} (ID: {item.id})")
+    print(f"    Price: {item.price} {item.currency}")
+    print(f"    URL: {item.url}")
+    # etc.
 ```
-You can access each single Item's attributes as shown here:
-```py
-item.title
-item.id
-item.photo
-item.brand
-item.price
-item.url
-item.currency
-```
-
