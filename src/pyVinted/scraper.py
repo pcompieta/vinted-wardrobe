@@ -1,13 +1,36 @@
-from pyVinted.items.item import Item
+from pyVinted.item import Item
 from pyVinted.requester import requester
 from urllib.parse import urlparse, parse_qsl
 from requests.exceptions import HTTPError
 from typing import List, Dict
 from pyVinted.vinted_urls import Urls
-class Items:
+class Scraper:
 
     def __init__(self, locale=None):
         self.locale = locale
+
+
+    def wardrobe_all(self, member_id) -> List[Item]:
+        """
+        Retrieves all items from a given wardrobe on Vinted.
+
+        Args:
+            member_id (str): The member id of the wardrobe to be retrieved.
+
+        """
+
+        all_items = []
+        page = 1
+        while True:
+            print(f"Fetching page {page}...")
+            page_items = self.wardrobe(member_id, page=page)
+            if not page_items:
+                print("Items list exhausted.")
+                break
+            all_items.extend(page_items)
+            page += 1
+
+        return all_items
 
 
     def wardrobe(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:

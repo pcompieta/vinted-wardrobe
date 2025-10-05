@@ -1,7 +1,4 @@
-from urllib.parse import urlparse, parse_qsl
-import requests
-from .items.item import Item
-from pyVinted.items import Items
+from pyVinted.scraper import Scraper
 from pyVinted.requester import requester
 
 class Vinted:
@@ -21,4 +18,4 @@ class Vinted:
         if proxy is not None:
             requester.session.proxies.update(proxy)
 
-        self.items = Items(locale=locale)
+        self.scraper = Scraper(locale=locale)

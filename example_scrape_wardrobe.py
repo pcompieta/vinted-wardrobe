@@ -12,22 +12,15 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def main():
     vinted = Vinted(locale=LOCALE)
-    page = 1
-    while True:
-        print(f"Fetching page {page}...")
-        page_items = vinted.items.wardrobe(MEMBER_ID, page=page)
-        if not page_items:
-            print("No more items found.")
-            break
-        process_page_items(page, page_items)
-        page += 1
+    items = vinted.scraper.wardrobe_all(MEMBER_ID)
+    print(f"Found {len(items)} items in wardrobe {MEMBER_ID}.")
+
+    process_page_items(items)
 
 
-def process_page_items(page, page_items):
-    print(f"Found {len(page_items)} items on page {page}.")
-
-    for idx, item in enumerate(page_items, 1):
-        print(f"  Processing item {idx} on page {page}: {item.title} (ID: {item.id})")
+def process_page_items(items):
+    for idx, item in enumerate(items, 1):
+        print(f"  Processing item {idx}: {item.title} (ID: {item.id})")
         item_dir = prepare_item_dir(item)
         save_item_json(item, item_dir)
         download_images(item, item_dir)
