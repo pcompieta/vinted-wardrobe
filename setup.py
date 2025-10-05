@@ -11,7 +11,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 # Setting up
 setup(
     # the name must match the folder name 'verysimplemodule'
-    name="vinted-client",
+    name="vinted-wardrobe-refresher",
     version=VERSION,
     author="Paolo Compieta",
     author_email="paolocompieta@gmail.com",
