@@ -1,5 +1,5 @@
-# Vinted Wardrobe Refresher
-Simple python package that uses the Vinted API to search new posts.
+# Vinted Wardrobe client
+Simple python package that uses the Vinted API to export Wardrobe.
 
 ## Install
 Install the package via pip:
