@@ -6,9 +6,9 @@ from urllib.parse import urlparse, parse_qsl
 from requests import get
 from requests.exceptions import HTTPError
 
-from pyVinted.item import Item
-from pyVinted.requester import requester
-from pyVinted.vinted_urls import Urls
+from vintedwardrobe.item import Item
+from vintedwardrobe.requester import requester
+from vintedwardrobe.vinted_urls import Urls
 
 
 class Scraper:

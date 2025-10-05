@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from pyVinted.requester import requester
+from vintedwardrobe.requester import requester
 
 
 class Item:

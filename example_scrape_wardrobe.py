@@ -1,6 +1,6 @@
 import os
-from pyVinted import Vinted
-from pyVinted.scraper import save_item_json_to_folder, download_images_to_folders
+from vintedwardrobe import Vinted
+from vintedwardrobe.scraper import save_item_json_to_folder, download_images_to_folders
 
 LOCALE = "it"
 MEMBER_ID = "143839772"

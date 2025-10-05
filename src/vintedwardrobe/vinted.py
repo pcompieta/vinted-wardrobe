@@ -1,12 +1,9 @@
-from pyVinted.scraper import Scraper
-from pyVinted.requester import requester
+from vintedwardrobe.scraper import Scraper
+from vintedwardrobe.requester import requester
 
 class Vinted:
     """
-    This class is built to connect with the pyVinted API.
-
-    It's main goal is to be able to retrieve items from a given url search.\n
-
+    Access point to the 'vintedwardrobe' package.
     """
 
     def __init__(self, locale="fr", proxy=None):
