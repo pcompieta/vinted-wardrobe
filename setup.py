@@ -3,7 +3,7 @@ import setuptools
 
 
 VERSION = "1.0"
-DESCRIPTION = "Vinted Python client"
+DESCRIPTION = "Vinted Wardrobe Client"
 
 with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
@@ -11,7 +11,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 # Setting up
 setup(
     # the name must match the folder name 'verysimplemodule'
-    name="vinted-wardrobe-refresher",
+    name="vinted-wardrobe",
     version=VERSION,
     author="Paolo Compieta",
     author_email="paolocompieta@gmail.com",
@@ -29,5 +29,5 @@ setup(
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.13",
-    url="https://github.com/pcompieta/vinted-wardrobe-refresher",
+    url="https://github.com/pcompieta/vinted-wardrobe",
 )
