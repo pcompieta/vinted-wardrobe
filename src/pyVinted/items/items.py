@@ -39,62 +39,64 @@ class Items:
             raise err
 
 
-    def parseUrl(self, url, nbrItems=20, page=1, time=None) -> Dict:
+    @staticmethod
+    def parse_url(url, nbr_items=20, page=1, time=None) -> Dict:
         """
         Parse Vinted search url to get parameters the for api call.
 
         Args:
             url (str): The url of the research on vinted.
-            nbrItems (int): Number of items to be returned (default 20).
+            nbr_items (int): Number of items to be returned (default 20).
             page (int): Page number to be returned (default 1).
+            time (int): Unix timestamp to filter items listed after this time (default None).
 
         """
-        querys = parse_qsl(urlparse(url).query)
+        queries = parse_qsl(urlparse(url).query)
 
         params = {
             "search_text": "+".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "search_text"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "search_text"])
             ),
             "catalog_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "catalog[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "catalog[]"])
             ),
             "color_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "color_ids[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "color_ids[]"])
             ),
             "brand_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "brand_ids[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "brand_ids[]"])
             ),
             "size_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "size_ids[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "size_ids[]"])
             ),
             "material_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "material_ids[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "material_ids[]"])
             ),
             "status_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "status[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "status[]"])
             ),
             "country_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "country_ids[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "country_ids[]"])
             ),
             "city_ids": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "city_ids[]"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "city_ids[]"])
             ),
             "is_for_swap": ",".join(
-                map(str, [1 for tpl in querys if tpl[0] == "disposal[]"])
+                map(str, [1 for tpl in queries if tpl[0] == "disposal[]"])
             ),
             "currency": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "currency"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "currency"])
             ),
             "price_to": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "price_to"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "price_to"])
             ),
             "price_from": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "price_from"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "price_from"])
             ),
             "page": page,
-            "per_page": nbrItems,
+            "per_page": nbr_items,
             "order": ",".join(
-                map(str, [tpl[1] for tpl in querys if tpl[0] == "order"])
+                map(str, [tpl[1] for tpl in queries if tpl[0] == "order"])
             ),
             "time": time
         }
