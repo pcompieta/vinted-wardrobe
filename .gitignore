@@ -3,3 +3,5 @@
 .vscode
 testApi.ipynb
 venv/**/*
+
+vinted_items
