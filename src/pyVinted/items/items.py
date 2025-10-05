@@ -3,7 +3,7 @@ from pyVinted.requester import requester
 from urllib.parse import urlparse, parse_qsl
 from requests.exceptions import HTTPError
 from typing import List, Dict
-from pyVinted.settings import Urls
+from pyVinted.vinted_urls import Urls
 class Items:
 
 
