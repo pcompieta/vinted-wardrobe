@@ -6,27 +6,57 @@ from typing import List, Dict
 from pyVinted.vinted_urls import Urls
 class Items:
 
-
-    def search(self, url, nbrItems: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:
+    def wardrobe(self, vinted_site, member_id, nbr_items: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:
         """
-        Retrieves items from a given search url on vited.
+        Retrieves items from a given search url on Vinted.
+
+        Args:
+            vinted_site (str): The url of the base website, used to extract locale.
+            member_id (str): The member id of the wardrobe to be retrieved.
+            nbr_items (int): Number of items to be returned (default 20).
+            page (int): Page number to be returned (default 1).
+            time (int): Unix timestamp to filter items listed after this time (default None).
+            json (bool): If True, returns raw JSON data instead of Item objects (default False).
+
+        """
+
+        locale = urlparse(vinted_site).netloc
+        requester.setLocale(locale)
+
+        params = self.parse_url(vinted_site, nbr_items, page, time)
+        wardrobe_endpoint = Urls.VINTED_WARDROBE_ENDPOINT.replace('{member_id}', member_id)
+        vinted_site = f"https://{locale}{Urls.VINTED_API_URL}/{wardrobe_endpoint}"
+
+        return self.fetch_items(json, params, vinted_site)
+
+
+    def search(self, url, nbr_items: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:
+        """
+        Retrieves items from a given search url on Vinted.
 
         Args:
             url (str): The url of the research on vinted.
-            nbrItems (int): Number of items to be returned (default 20).
+            nbr_items (int): Number of items to be returned (default 20).
             page (int): Page number to be returned (default 1).
+            time (int): Unix timestamp to filter items listed after this time (default None).
+            json (bool): If True, returns raw JSON data instead of Item objects (default False).
 
         """
 
         locale = urlparse(url).netloc
         requester.setLocale(locale)
 
-        params = self.parseUrl(url, nbrItems, page, time)
+        params = self.parse_url(url, nbr_items, page, time)
         #url = f"{Urls.VINTED_API_URL}/{Urls.VINTED_PRODUCTS_ENDPOINT}"
         url = f"https://{locale}{Urls.VINTED_API_URL}/{Urls.VINTED_PRODUCTS_ENDPOINT}"
 
+        return self.fetch_items(json, params, url)
+
+
+    @staticmethod
+    def fetch_items(json, params, vinted_site):
         try:
-            response = requester.get(url=url, params=params)
+            response = requester.get(url=vinted_site, params=params)
             response.raise_for_status()
             items = response.json()
             items = items["items"]
