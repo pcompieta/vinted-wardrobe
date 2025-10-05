@@ -1,9 +1,16 @@
+import json
+import os
+from typing import List, Dict
+from urllib.parse import urlparse, parse_qsl
+
+from requests import get
+from requests.exceptions import HTTPError
+
 from pyVinted.item import Item
 from pyVinted.requester import requester
-from urllib.parse import urlparse, parse_qsl
-from requests.exceptions import HTTPError
-from typing import List, Dict
 from pyVinted.vinted_urls import Urls
+
+
 class Scraper:
 
     def __init__(self, locale=None):
@@ -33,7 +40,7 @@ class Scraper:
         return all_items
 
 
-    def wardrobe(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:
+    def wardrobe(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json_raw: bool = False) -> List[Item]:
         """
         Retrieves items from a given search url on Vinted.
 
@@ -42,7 +49,7 @@ class Scraper:
             nbr_items (int): Number of items to be returned (default 20).
             page (int): Page number to be returned (default 1).
             time (int): Unix timestamp to filter items listed after this time (default None).
-            json (bool): If True, returns raw JSON data instead of Item objects (default False).
+            json_raw (bool): If True, returns raw JSON data instead of Item objects (default False).
 
         """
 
@@ -53,40 +60,17 @@ class Scraper:
         wardrobe_endpoint = Urls.VINTED_WARDROBE_ENDPOINT.format(member_id=member_id)
         vinted_site = f"https://{locale}{Urls.VINTED_API_URL}/{wardrobe_endpoint}"
 
-        return self.fetch_items(json, params, vinted_site)
-
-
-    def search(self, url, nbr_items: int = 20, page: int =1, time: int = None, json: bool = False) -> List[Item]:
-        """
-        Retrieves items from a given search url on Vinted.
-
-        Args:
-            url (str): The url of the research on vinted.
-            nbr_items (int): Number of items to be returned (default 20).
-            page (int): Page number to be returned (default 1).
-            time (int): Unix timestamp to filter items listed after this time (default None).
-            json (bool): If True, returns raw JSON data instead of Item objects (default False).
-
-        """
-
-        locale = self.locale or urlparse(url).netloc
-        requester.setLocale(locale)
-
-        params = self.parse_url(url, nbr_items, page, time)
-        #url = f"{Urls.VINTED_API_URL}/{Urls.VINTED_PRODUCTS_ENDPOINT}"
-        url = f"https://{locale}{Urls.VINTED_API_URL}/{Urls.VINTED_PRODUCTS_ENDPOINT}"
-
-        return self.fetch_items(json, params, url)
+        return self.fetch_items(json_raw, params, vinted_site)
 
 
     @staticmethod
-    def fetch_items(json, params, vinted_site):
+    def fetch_items(json_raw, params, vinted_site):
         try:
             response = requester.get(url=vinted_site, params=params)
             response.raise_for_status()
             items = response.json()
             items = items["items"]
-            if not json:
+            if not json_raw:
                 return [Item(_item) for _item in items]
             else:
                 return items
@@ -158,3 +142,34 @@ class Scraper:
         }
 
         return params
+
+
+def download_images_to_folders(item, item_dir):
+    if item.photos and isinstance(item.photos, list):
+        for i, photo in enumerate(item.photos):
+            photo_url = photo.get("url")
+            if photo_url:
+                photo_filename = os.path.join(item_dir, f"photo_{i + 1}.jpg")
+                print(f"    Downloading photo {i + 1} for item {item.id}...")
+                download_image_to_folder(photo_url, photo_filename)
+            else:
+                print(f"    No URL for photo {i + 1} of item {item.id}.")
+    else:
+        print(f"    No photos found for item {item.id}.")
+
+
+def download_image_to_folder(url, path):
+    try:
+        response = get(url, stream=True)
+        if response.status_code == 200:
+            with open(path, 'wb') as f:
+                for chunk in response.iter_content(1024):
+                    f.write(chunk)
+    except Exception as e:
+        print(f"Failed to download {url}: {e}")
+
+
+def save_item_json_to_folder(item, item_dir):
+    item_json_path = os.path.join(item_dir, f"{item.id}.json")
+    with open(item_json_path, "w", encoding="utf-8") as jf:
+        json.dump(item.raw_data, jf, ensure_ascii=False, indent=2)
