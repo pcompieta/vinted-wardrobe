@@ -1,4 +1,4 @@
-from vintedwardrobe.scraper import Scraper
+from vintedwardrobe.wardrobe import Wardrobe
 from vintedwardrobe.requester import requester
 
 class Vinted:
@@ -15,4 +15,4 @@ class Vinted:
         if proxy is not None:
             requester.session.proxies.update(proxy)
 
-        self.scraper = Scraper(locale=locale)
+        self.wardrobe = Wardrobe(locale=locale)

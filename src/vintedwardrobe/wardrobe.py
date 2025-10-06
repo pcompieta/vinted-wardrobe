@@ -11,7 +11,7 @@ from vintedwardrobe.requester import requester
 from vintedwardrobe.vinted_urls import Urls
 
 
-class Scraper:
+class Wardrobe:
 
     def __init__(self, locale=None):
         self.locale = locale
@@ -60,11 +60,6 @@ class Scraper:
         wardrobe_endpoint = Urls.VINTED_WARDROBE_ENDPOINT.format(member_id=member_id)
         vinted_site = f"https://{locale}{Urls.VINTED_API_URL}/{wardrobe_endpoint}"
 
-        return self.fetch_items(json_raw, params, vinted_site)
-
-
-    @staticmethod
-    def fetch_items(json_raw, params, vinted_site):
         try:
             response = requester.get(url=vinted_site, params=params)
             response.raise_for_status()

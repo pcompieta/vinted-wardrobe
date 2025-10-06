@@ -10,9 +10,10 @@ pip install vintedwardrobe
 
 ```py
 from vintedwardrobe import Vinted
+
 vinted = Vinted(locale="it")
 
-items = vinted.scraper.wardrobe_all("your_member_id_here")
+items = vinted.wardrobe.wardrobe_all("your_member_id_here")
 
 for idx, item in enumerate(items, 1):
     print(f"  Processing item {idx}: {item.title} (ID: {item.id})")

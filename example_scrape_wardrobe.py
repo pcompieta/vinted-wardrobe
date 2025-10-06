@@ -1,6 +1,6 @@
 import os
 from vintedwardrobe import Vinted
-from vintedwardrobe.scraper import save_item_json_to_folder, download_images_to_folders
+from vintedwardrobe.wardrobe import save_item_json_to_folder, download_images_to_folders
 
 LOCALE = "it"
 MEMBER_ID = "143839772"
@@ -11,7 +11,7 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     vinted = Vinted(locale=LOCALE)
-    items = vinted.scraper.wardrobe_all(MEMBER_ID)
+    items = vinted.wardrobe.wardrobe_all(MEMBER_ID)
     print(f"Found {len(items)} items in wardrobe {MEMBER_ID}.")
 
     for idx, item in enumerate(items, 1):
