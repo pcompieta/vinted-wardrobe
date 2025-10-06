@@ -1,4 +1,6 @@
 import os
+import shutil
+
 from vintedwardrobe import Vinted
 from vintedwardrobe.wardrobe import save_item_json_to_folder, download_images_to_folders
 
@@ -8,6 +10,7 @@ OUTPUT_DIR = "vinted_items"
 
 
 def main():
+    shutil.rmtree(OUTPUT_DIR)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     vinted = Vinted(locale=LOCALE)
