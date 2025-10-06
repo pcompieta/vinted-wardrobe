@@ -11,7 +11,7 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     vinted = Vinted(locale=LOCALE)
-    items = vinted.wardrobe.wardrobe_all(MEMBER_ID)
+    items = vinted.wardrobe.dump(MEMBER_ID)
     print(f"Found {len(items)} items in wardrobe {MEMBER_ID}.")
 
     for idx, item in enumerate(items, 1):

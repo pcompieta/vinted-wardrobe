@@ -17,7 +17,7 @@ class Wardrobe:
         self.locale = locale
 
 
-    def wardrobe_all(self, member_id) -> List[Item]:
+    def dump(self, member_id) -> List[Item]:
         """
         Retrieves all items from a given wardrobe on Vinted.
 
@@ -30,7 +30,7 @@ class Wardrobe:
         page = 1
         while True:
             print(f"Fetching page {page}...")
-            page_items = self.wardrobe(member_id, page=page)
+            page_items = self.fetch_items(member_id, page=page)
             if not page_items:
                 print("Items list exhausted.")
                 break
@@ -40,7 +40,7 @@ class Wardrobe:
         return all_items
 
 
-    def wardrobe(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json_raw: bool = False) -> List[Item]:
+    def fetch_items(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json_raw: bool = False) -> List[Item]:
         """
         Retrieves items from a given search url on Vinted.
 
