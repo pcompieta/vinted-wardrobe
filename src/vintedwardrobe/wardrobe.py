@@ -6,7 +6,7 @@ from urllib.parse import urlparse, parse_qsl
 from requests import get
 from requests.exceptions import HTTPError
 
-from vintedwardrobe.item import Item
+from vintedwardrobe.wardrobe_item import WardrobeItem
 from vintedwardrobe.requester import requester
 from vintedwardrobe.constants import Constants
 
@@ -17,7 +17,7 @@ class Wardrobe:
         self.locale = locale
 
 
-    def dump(self, member_id) -> List[Item]:
+    def dump(self, member_id) -> List[WardrobeItem]:
         """
         Retrieves all items from a given wardrobe on Vinted.
 
@@ -40,7 +40,7 @@ class Wardrobe:
         return all_items
 
 
-    def fetch_items(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json_raw: bool = False) -> List[Item]:
+    def fetch_items(self, member_id, nbr_items: int = 20, page: int =1, time: int = None, json_raw: bool = False) -> List[WardrobeItem]:
         """
         Retrieves items from a given search url on Vinted.
 
@@ -49,7 +49,7 @@ class Wardrobe:
             nbr_items (int): Number of items to be returned (default 20).
             page (int): Page number to be returned (default 1).
             time (int): Unix timestamp to filter items listed after this time (default None).
-            json_raw (bool): If True, returns raw JSON data instead of Item objects (default False).
+            json_raw (bool): If True, returns raw JSON data instead of WardrobeItem objects (default False).
 
         """
 
@@ -66,7 +66,7 @@ class Wardrobe:
             items = response.json()
             items = items["items"]
             if not json_raw:
-                return [Item(_item) for _item in items]
+                return [WardrobeItem(_item) for _item in items]
             else:
                 return items
 

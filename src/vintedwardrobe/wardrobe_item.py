@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from vintedwardrobe.requester import requester
 
 
-class Item:
+class WardrobeItem:
     def __init__(self, data):
         self.raw_data = data
         self.id = data.get("id")
