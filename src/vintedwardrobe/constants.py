@@ -1,4 +1,4 @@
-class Urls:
+class Constants:
 
     VINTED_BASE_URL = "www.vinted.{locale}"
     VINTED_API_URL = f"/api/v2"

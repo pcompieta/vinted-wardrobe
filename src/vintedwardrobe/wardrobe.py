@@ -8,7 +8,7 @@ from requests.exceptions import HTTPError
 
 from vintedwardrobe.item import Item
 from vintedwardrobe.requester import requester
-from vintedwardrobe.vinted_urls import Urls
+from vintedwardrobe.constants import Constants
 
 
 class Wardrobe:
@@ -53,12 +53,12 @@ class Wardrobe:
 
         """
 
-        locale = Urls.VINTED_BASE_URL.format(locale=self.locale)
+        locale = Constants.VINTED_BASE_URL.format(locale=self.locale)
         requester.setLocale(locale)
 
         params = self.parse_url("www.vinted.unused", nbr_items, page, time)
-        wardrobe_endpoint = Urls.VINTED_WARDROBE_ENDPOINT.format(member_id=member_id)
-        vinted_site = f"https://{locale}{Urls.VINTED_API_URL}/{wardrobe_endpoint}"
+        wardrobe_endpoint = Constants.VINTED_WARDROBE_ENDPOINT.format(member_id=member_id)
+        vinted_site = f"https://{locale}{Constants.VINTED_API_URL}/{wardrobe_endpoint}"
 
         try:
             response = requester.get(url=vinted_site, params=params)
